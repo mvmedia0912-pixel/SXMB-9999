@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#ca8a04" />
+    </linearGradient>
+    <linearGradient id="redBadge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded box -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+
+  <!-- Outer Golden Ring -->
+  <circle cx="256" cy="256" r="195" fill="none" stroke="url(#gold)" stroke-width="6" opacity="0.4" />
+  <circle cx="256" cy="256" r="175" fill="url(#redBadge)" stroke="url(#gold)" stroke-width="12" filter="url(#glow)" />
+
+  <!-- Inner lottery pattern -->
+  <circle cx="256" cy="256" r="140" fill="none" stroke="#fef08a" stroke-width="2" stroke-dasharray="8 8" opacity="0.6" />
+
+  <!-- Center Typography & Motif -->
+  <text x="256" y="225" font-family="system-ui, -apple-system, sans-serif" font-size="78" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="2">XSMB</text>
+  <rect x="176" y="250" width="160" height="34" rx="17" fill="url(#gold)" />
+  <text x="256" y="274" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="4">AI PREDICTOR</text>
+
+  <!-- Stars -->
+  <polygon points="256,120 262,138 280,138 266,148 271,166 256,155 241,166 246,148 232,138 250,138" fill="url(#gold)" />
+</svg>

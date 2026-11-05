@@ -1,0 +1,70 @@
+{
+  "id": "/",
+  "name": "XSMB AI - Dự Đoán Xổ Số Miền Bắc",
+  "short_name": "XSMB AI",
+  "description": "Ứng dụng dự đoán xổ số miền Bắc với thuật toán xác suất thống kê, Pascal, Bạc Nhớ và Cầu Ghép",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "vi",
+  "dir": "ltr",
+  "categories": [
+    "utilities",
+    "entertainment",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Top 3 Dự Đoán",
+      "short_name": "Dự Đoán",
+      "description": "Xem 3 cặp số dự đoán có tỉ lệ cao nhất",
+      "url": "/#predictions",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Bảng Kết Quả 27 Giải",
+      "short_name": "Kết Quả",
+      "description": "Tra cứu bảng kết quả 27 giải XSMB và lô tô",
+      "url": "/#prizeboard",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

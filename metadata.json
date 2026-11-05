@@ -1,0 +1,6 @@
+{
+  "name": "XSMB Predictor - Quét & Dự Đoán Xổ Số Miền Bắc",
+  "description": "Quét kết quả xổ số miền Bắc trực tiếp và ứng dụng các thuật toán xác suất thống kê (Pascal, Bạc Nhớ, Cầu Ghép Giải, Chu Kỳ Nhịp) để dự đoán Top 3 kết quả 2 số cuối và 3 số cuối có tỉ lệ cao nhất.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
