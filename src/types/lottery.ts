@@ -107,11 +107,22 @@ export interface ThreeDigitPrediction {
   derivationMethod: string; // e.g. "Càng bóng ngũ hành + Tổng GĐB"
 }
 
+export interface SpecialDePrediction {
+  bachThuDe: string;
+  bachThuDeRev: string;
+  tamThuDe: string[];
+  chamDe: string[];
+  tongDe: string[];
+  deProbability: number;
+  reason: string;
+}
+
 export interface PredictionResult {
   targetDate: string; // Ngày dự đoán (e.g. 2026-10-28)
   basedOnDate: string; // Ngày kết quả gốc (e.g. 2026-10-27)
   top3TwoDigits: TwoDigitPrediction[];
   top3ThreeDigits: ThreeDigitPrediction[];
+  specialDe?: SpecialDePrediction;
   portfolioMetrics: PortfolioMetrics;
   pascalData: PascalResult;
   topBridges: CauGhepBridge[];
@@ -131,5 +142,6 @@ export interface PredictionResult {
     hitTwoDigitsRank?: number;
     hitThreeDigits: boolean;
     hitThreeDigitsRank?: number;
+    hitSpecialDe?: boolean;
   };
 }

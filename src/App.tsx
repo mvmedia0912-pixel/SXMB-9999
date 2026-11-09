@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { AlgorithmTabs } from './components/AlgorithmTabs';
-import { AndroidInstallModal } from './components/AndroidInstallModal';
 import { BacktestHistoryView } from './components/BacktestHistoryView';
 import { EditDrawModal } from './components/EditDrawModal';
 import { Header } from './components/Header';
@@ -27,7 +26,6 @@ export default function App() {
   const [weights, setWeights] = useState<AlgorithmWeights>(DEFAULT_WEIGHTS);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
   const [recalcCounter, setRecalcCounter] = useState(0);
 
   // Format date helper
@@ -227,7 +225,6 @@ export default function App() {
         isCalculating={isCalculating}
         onEditDrawClick={() => setIsEditModalOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenInstallModal={() => setIsInstallModalOpen(true)}
         activeNav={activeNav}
         setActiveNav={setActiveNav}
       />
@@ -296,21 +293,6 @@ export default function App() {
         weights={weights}
         onSave={(newWeights) => setWeights(newWeights)}
       />
-
-      {/* Android APK & PWA Installation Modal */}
-      <AndroidInstallModal
-        isOpen={isInstallModalOpen}
-        onClose={() => setIsInstallModalOpen(false)}
-      />
-
-      {/* Mobile Floating Quick Install Button */}
-      <button
-        onClick={() => setIsInstallModalOpen(true)}
-        className="fixed bottom-5 right-5 z-30 md:hidden flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-xl shadow-emerald-950/40 border border-emerald-400 active:scale-95 transition"
-      >
-        <span className="w-2 h-2 rounded-full bg-amber-300 animate-pulse" />
-        <span>Cài App Android</span>
-      </button>
 
       {/* Clean Footer */}
       <footer className="bg-white border-t border-slate-200 py-6 px-4 sm:px-6 lg:px-8 mt-12">

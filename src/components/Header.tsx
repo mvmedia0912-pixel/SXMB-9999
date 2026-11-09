@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calculator, Edit3, RefreshCw, SlidersHorizontal, Smartphone } from 'lucide-react';
+import { Calculator, Edit3, RefreshCw, SlidersHorizontal } from 'lucide-react';
 
 interface HeaderProps {
   onScanClick: () => void;
@@ -8,7 +8,6 @@ interface HeaderProps {
   isCalculating: boolean;
   onEditDrawClick: () => void;
   onOpenSettings: () => void;
-  onOpenInstallModal: () => void;
   activeNav: string;
   setActiveNav: (nav: string) => void;
 }
@@ -20,7 +19,6 @@ export const Header: React.FC<HeaderProps> = ({
   isCalculating,
   onEditDrawClick,
   onOpenSettings,
-  onOpenInstallModal,
   activeNav,
   setActiveNav,
 }) => {
@@ -85,15 +83,6 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Zone 3: Actions */}
           <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={onOpenInstallModal}
-              title="Cài đặt ứng dụng lên điện thoại Android hoặc xuất file APK"
-              className="px-2.5 py-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100/90 border border-emerald-300 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
-            >
-              <Smartphone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              <span>Cài App Android</span>
-            </button>
-
             <button
               onClick={onEditDrawClick}
               title="Nhập hoặc sửa kết quả kỳ này"

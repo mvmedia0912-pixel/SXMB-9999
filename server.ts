@@ -458,6 +458,17 @@ const sendManifest = (_req: Request, res: Response) => {
   }
 };
 
+// Health check endpoint for uptime and container liveness
+app.get('/api/health', (_req: Request, res: Response) => {
+  res.json({
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    drawsCount: drawsDatabase.length,
+    latestDraw: drawsDatabase[0]?.date || null,
+  });
+});
+
 app.get('/manifest.json', sendManifest);
 app.get('/manifest.webmanifest', sendManifest);
 
@@ -468,24 +479,75 @@ app.use(express.static(path.resolve(__dirname, 'public'), {
   }
 }));
 
-async function startServer() {
-  if (process.env.NODE_ENV !== 'production') {
+import type { ViteDevServer } from 'vite';
+
+// Process-level resilience against crashes
+process.on('uncaughtException', (err: Error) => {
+  console.error('Unhandled Exception captured (server protected):', err.message);
+});
+
+process.on('unhandledRejection', (reason: unknown) => {
+  console.error('Unhandled Promise Rejection (server protected):', reason);
+});
+
+let serverInstance: ReturnType<typeof app.listen> | null = null;
+let viteInstance: ViteDevServer | null = null;
+
+async function startServer(retryCount = 0) {
+  if (process.env.NODE_ENV !== 'production' && !viteInstance) {
     const { createServer: createViteServer } = await import('vite');
-    const vite = await createViteServer({
+    viteInstance = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
-    app.use(vite.middlewares);
-  } else {
+    app.use(viteInstance.middlewares);
+  } else if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req: Request, res: Response) => {
       res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  serverInstance = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://0.0.0.0:${PORT}`);
   });
+
+  serverInstance.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      if (retryCount < 5) {
+        console.warn(`Port ${PORT} is busy, retrying restart in 800ms (attempt ${retryCount + 1}/5)...`);
+        setTimeout(() => {
+          serverInstance?.close();
+          startServer(retryCount + 1);
+        }, 800);
+      } else {
+        console.error(`Port ${PORT} is still in use after 5 retries.`);
+      }
+    } else {
+      console.error('Server network error:', err);
+    }
+  });
 }
+
+// Graceful cleanup on restart / shutdown
+const shutdown = () => {
+  console.log('Gracefully closing server...');
+  if (serverInstance) {
+    serverInstance.close(() => {
+      if (viteInstance) {
+        viteInstance.close().then(() => process.exit(0)).catch(() => process.exit(0));
+      } else {
+        process.exit(0);
+      }
+    });
+    // Fallback exit if sockets linger
+    setTimeout(() => process.exit(0), 3000);
+  } else {
+    process.exit(0);
+  }
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
 
 startServer();
